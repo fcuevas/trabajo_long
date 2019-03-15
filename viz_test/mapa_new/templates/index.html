@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://www.comitesolar.cl/wp-content/themes/gobcl-wp-master/img/favicon.ico">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Desempeño Tecnologías Fotovoltaicas</title>
+
+    {{ bokeh_css }}
+    {{ bokeh_js }}
+    <style media="screen">
+      {% include 'main.css' %}
+    </style>
+
+  </head>
+
+  <body>
+
+
+
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-comiteSolar">
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSI" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+
+      <div class="collapse navbar-collapse" id="navbarSI">
+          <ul class="nav navbar-nav ml-auto">
+
+            <li class="nav-item">
+              <a class="nav-link" href="#inicio">Inicio <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#info_si">Información</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#gris_vis">Otras Visualizaciones</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#mapavis">Mapa</a>
+            </li>
+
+          </ul>
+
+      </div>
+    </nav>
+
+
+
+
+    <header class="cs_banner jumbotron">
+      <div class="wrap">
+        <h1 id="logo-main">
+          <a href="http://www.comitesolar.cl/">
+            <img src="mapa_dev/static/img/corfo.png" alt="Gobierno de Chile">
+          </a>
+          <a href="http://www.comitesolar.cl/">
+            <img src="mapa_dev/static/img/comite.png" alt="Comité Solar">
+          </a>
+        </h1>
+      </div>
+    </header>
+
+
+
+    <!-- Titulo y menu -->
+    <section id="inicio" class="cs_sistemaInfo">
+      <div class="jumbotron">
+
+        <div class="container">
+          <div class="row">
+
+              <div class="col-md-5">
+                <h2 class="cs_titulo">Sistema de información de energía solar en Chile</h2>
+                <!-- <p>Puesta en marcha: 8 de Septiembre de 2017</p> -->
+              </div>
+
+              <div class="col-md-2">
+
+              </div>
+
+              <div class="col-md-5">
+                <p class="sist_descripcion">
+                El desarrollo de la energía solar en Chile en los últimos años es destacable, lo cual ha permitido que se desarrolle un mercado de bienes y servicios en torno a esta industria. La información relativa a energía solar es amplia y abarca diversos aspectos, desde estudios conceptuales hasta la operación y mantenimiento de plantas.
+                  </p>
+                  <p class="sist_descripcion">
+                  Esta iniciativa tiene por objetivo visibilizar y disponibilizar información relativa a energía solar en Chile. En esta iniciativa trabajamos con datos. En un primer nivel de información, los datos son desplegados en el mapa que se presenta a continuación. La descripción de cada capa de información se encuentra disponible abajo del mapa.
+                  </p>
+
+              </div>
+
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+
+    <!-- White -->
+    <section id="info_si" class="si_informacion">
+        <!-- NOTE: Todo irá aquí -->
+        <div class="container">
+          <h3 class="titulo_seccion">
+            <svg class="linea_izq" height="10" width="300">
+              <line x1="0" y1="5" x2="300" y2="5" style="stroke:#f37235;stroke-width:3" />
+            </svg>  El mapa de iniciativas solares contiene la siguiente información</h3>
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#plantasSolares" role="tab" aria-controls="home" aria-selected="true">Plantas Solares conectadas al Sistema Eléctrico Nacional</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#direccionMeteorologica" role="tab" aria-controls="profile" aria-selected="false">Estaciones de la Dirección Meteorológica de Chile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#estacionAlmagro" role="tab" aria-controls="contact" aria-selected="false">Estación de medición <br> en Diego de Almagro</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="soiling-tab" data-toggle="tab" href="#soiling" role="tab" aria-controls="soiling" aria-selected="false">Estaciones de medición <br> de soiling</a>
+              </li>
+
+<!--               <li class="nav-item">
+                <a class="nav-link" id="soiling-tab" data-toggle="tab" href="#soiling" role="tab" aria-controls="soiling" aria-selected="false">Estaciones de medición <br> de soiling</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#direccionMeteorologica" role="tab" aria-controls="profile" aria-selected="false">Estaciones de la Dirección Meteorológica de Chile</a>
+              </li> -->
+
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="plantasSolares" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p>El Coordinador Eléctrico Nacional (CEN) pone a disposición los datos de generación de las plantas conectadas al Sistema Eléctrico Nacional (SEN). Los datos están disponibles en el <q cite=https://www.coordinador.cl/sistema-informacion-publica/>Sistema de Información Pública</q> del CEN. En el mapa se muestra la ubicación de cada planta solar con círculos de color negro. El tamaño del círculo está relacionado a la potencia instalada de la planta. Cabe destacar que al acercar la ubicación de las plantas de mayor tamaño, el mapa muestra el contorno real de la planta.</p>
+                  </div>
+<!--                   <div class="col-md-6">
+                    <img src="" class="img_ej" alt="Zona imagen de ejemplo">
+                  </div> -->
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="direccionMeteorologica" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p>La Dirección Meteorológica de Chile (DMC) tiene estaciones meteorológicas a lo largo del país. Los datos que desplegamos en esta aplicación, son los datos de la Red EMA (Estaciones Meteorológicas Automáticas). El mapa y los datos originales de la Red EMA pueden ser visitados en <a href="https://climatologia.meteochile.gob.cl/application/index/menuTematicoEmas">este enlace.</a> A diferencia del despliegue de los datos en la plataforma de la Red EMA, en esta plataforma nos enfocamos en las series de tiempo históricas.</p>
+                  </div>
+<!--                   <div class="col-md-6">
+                    <img src="" class="img_ej" alt="Zona imagen de ejemplo">
+                  </div> -->
+                </div>
+
+              </div>
+
+              <div class="tab-pane fade" id="estacionAlmagro" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="row">
+                  <div class="col-md-8">
+                    <p>Durante el año 2017, el Comité Solar de Corfo abrió el llamado para llevar a cabo el proyecto “Mediciones en Terreno para Diego de Almagro” <a href="http://codesser.cl/licitaciones_pen.php">(Licitación PEN-026, Codesser)</a>. El proyecto consiste en diseñar, instalar, monitorear y analizar una estación de medición de variables meteorológicas, una estación de comparación de tecnologías fotovoltaicas y una estación de análisis de soiling. La campaña de medición, a cargo de Fraunhofer CSET, se inició durante Septiembre del año 2017 y tendrá una duración de 1 año. Cada medición cuenta con su propia visualización, es decir, tenemos 3 visualizaciones: Medición de recurso solar; Caracterización de tecnologías fotovoltaicas y Medición de soiling. Para ver cada círculo asociado a las visualizaciones, se recomienda aumentar el zoom en la zona del mapa.</p>
+                  </div>
+                  <div class="col-md-4">
+                    <img src="mapa_dev/static/img/img5.jpg" class="img_ej" alt="Estación de medición, Diego de Almagro">
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="soiling" role="tabpanel" aria-labelledby="soiling-tab">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p>La Universidad de Santiago de Chile, a través del Bien Público de Corfo 15BP-45364, realizó un estudio de ensuciamiento de paneles fotovoltaicos a lo largo de Chile. El proyecto permitió la instalación de seis sistemas de ensuciamiento, los cuales consisten de cuatro paneles fotovoltaicos. Dos paneles se mantienen limpios, mientras que los otros dos se ensucian por las condiciones del entorno. </p>
+
+                  </div>
+                  <div class="col-md-6">
+                    <img src="mapa_dev/static/img/img1.png" class="img_ej" alt="Zona imagen de ejemplo">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- NOTE: Versión mobile -->
+            <div id="accordion">
+
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Sistema Eléctrico Nacional
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                  <div class="card-body">
+                    <p>El Coordinador Eléctrico Nacional (CEN) pone a disposición los datos de generación de las plantas conectadas al Sistema Eléctrico Nacional (SEN). Los datos están disponibles en el <q cite=https://www.coordinador.cl/sistema-informacion-publica/>Sistema de Información Pública</q> del CEN. En el mapa se muestra la ubicación de cada planta solar con círculos de color negro. El tamaño del círculo está relacionado a la potencia instalada de la planta. Cabe destacar que al acercar la ubicación de las plantas de mayor tamaño, el mapa muestra el contorno real de la planta.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Dirección Meteorológica de Chile
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                  <div class="card-body">
+                    <p>La Dirección Meteorológica de Chile (DMC) tiene estaciones meteorológicas a lo largo del país. Los datos que desplegamos en esta aplicación, son los datos de la Red EMA (Estaciones Meteorológicas Automáticas). El mapa y los datos originales de la Red EMA pueden ser visitados en <a href="https://climatologia.meteochile.gob.cl/application/index/menuTematicoEmas">este enlace.</a> A diferencia del despliegue de los datos en la plataforma de la Red EMA, en esta plataforma nos enfocamos en las series de tiempo históricas.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Estación Diego de Almagro
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                  <div class="card-body">
+                    <p>Durante el año 2017, el Comité Solar de Corfo abrió el llamado para llevar a cabo el proyecto “Mediciones en Terreno para Diego de Almagro” <a href="http://codesser.cl/licitaciones_pen.php">(Licitación PEN-026, Codesser)</a>. El proyecto consiste en diseñar, instalar, monitorear y analizar una estación de medición de variables meteorológicas, una estación de comparación de tecnologías fotovoltaicas y una estación de análisis de soiling. La campaña de medición, a cargo de Fraunhofer CSET, se inició durante Septiembre del año 2017 y tendrá una duración de 1 año. Cada medición cuenta con su propia visualización, es decir, tenemos 3 visualizaciones: Medición de recurso solar; Caracterización de tecnologías fotovoltaicas y Medición de soiling. Para ver cada círculo asociado a las visualizaciones, se recomienda aumentar el zoom en la zona del mapa.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" id="headingFour">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                      Estación de medición de Soiling
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                  <div class="card-body">
+                    <p>La Universidad de Santiago de Chile, a través del Bien Público de Corfo 15BP-45364, realizó un estudio de ensuciamiento de paneles fotovoltaicos a lo largo de Chile. El proyecto permitió la instalación de seis sistemas de ensuciamiento, los cuales consisten de cuatro paneles fotovoltaicos. Dos paneles se mantienen limpios, mientras que los otros dos se ensucian por las condiciones del entorno. </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Fin versión mobile -->
+        </div>
+        <!-- Fin de todo -->
+    </section>
+
+    <!--Gray-->
+    <section id="gris_vis" class="si_aboutVis">
+
+      <div class="container">
+        <h3 class="titulo_seccion">
+          <svg class="linea_izq" height="10" width="300">
+            <line x1="0" y1="5" x2="300" y2="5" style="stroke:#fff; stroke-width:3" />
+          </svg> Otras visualizaciones</h3>
+
+          <!--Op A-->
+          <div class="row justify-content-center">
+            <div class="col-lg-12">
+              <p>En esta sección se muestra información que no está relacionada a un punto específico del mapa.</p>
+
+            </div>
+
+            <div class="col-lg-12">
+              <div class="agrupar_visualizaciones">
+                <div class="row justify-content-center">
+                  <div class="col-8 col-sm-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Contribución de energía solar</h5>
+                        <p class="card-text">A continuación se puede ver la contribución de la energía solar en Chile respecto a otras fuentes de energía.</p>
+                        <a href="http://localhost:5500/dash_gen_tec" class="btn btn-siVis align-self-end">Ir al recurso</a>
+                        <!-- <a href="http://www.comitesolar.cl/dash_gen_tec" class="btn btn-siVis align-self-end">Ir al recurso</a> -->
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 col-sm-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Plantas solares conectadas al SEN</h5>
+                        <p class="card-text">La siguiente visualización agrupa el funcionamiento de la totalidad de las plantas solares en Chile.</p>
+                        <a href="http://localhost:5502/dash_plantas_chile" class="btn btn-siVis">Ir al recurso</a>
+                        <!-- <a href="http://www.comitesolar.cl/dash_plantas_chile" class="btn btn-siVis">Ir al recurso</a> -->
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 col-sm-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Eclipse solar 2019</h5>
+                        <p class="card-text">El 2 de Julio de 2019 habrá un eclipse solar en Chile...</p>
+                        <a href="http://localhost:5530/eclipse2019" class="btn btn-siVis">Ir al recurso</a>
+                        <!-- <a href="http://www.comitesolar.cl/eclipse2019" class="btn btn-siVis">Ir al recurso</a>                         -->
+                      </div>
+                    </div>
+                  </div>
+
+<!--                   <div class="col-8 col-sm-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Generación eléctrica por categoría</h5>
+                        <p class="card-text">La generación solar en relación a las categorías anteriormente mencionadas puede verse a continuacion.</p>
+                        <a href="http://localhost:5500/dash_gen_tec" class="btn btn-siVis">Ir al recurso</a>
+                        <a href="http://www.comitesolar.cl/dash_gen_tec" class="btn btn-siVis align-self-end">Ir al recurso</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 col-sm-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Generación eléctrica por categoría</h5>
+                        <p class="card-text">La generación solar en relación a las categorías anteriormente mencionadas puede verse a continuacion.</p>
+                        <a href="http://localhost:5500/dash_gen_tec" class="btn btn-siVis">Ir al recurso</a>
+                        <a href="http://www.comitesolar.cl/dash_gen_tec" class="btn btn-siVis align-self-end">Ir al recurso</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 col-sm-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Generación eléctrica por categoría</h5>
+                        <p class="card-text">La generación solar en relación a las categorías anteriormente mencionadas puede verse a continuacion.</p>
+                        <a href="http://localhost:5500/dash_gen_tec" class="btn btn-siVis">Ir al recurso</a>
+                        <a href="http://www.comitesolar.cl/dash_gen_tec" class="btn btn-siVis align-self-end">Ir al recurso</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 col-sm-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Generación eléctrica por categoría</h5>
+                        <p class="card-text">La generación solar en relación a las categorías anteriormente mencionadas puede verse a continuacion.</p>
+                        <a href="http://localhost:5500/dash_gen_tec" class="btn btn-siVis">Ir al recurso</a>
+                        <a href="http://www.comitesolar.cl/dash_gen_tec" class="btn btn-siVis align-self-end">Ir al recurso</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 col-sm-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Generación eléctrica por categoría</h5>
+                        <p class="card-text">La generación solar en relación a las categorías anteriormente mencionadas puede verse a continuacion.</p>
+                        <a href="http://localhost:5500/dash_gen_tec" class="btn btn-siVis">Ir al recurso</a>
+                        <a href="http://www.comitesolar.cl/dash_gen_tec" class="btn btn-siVis align-self-end">Ir al recurso</a>
+                      </div>
+                    </div>
+                  </div> -->
+                  
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <!--Fin op A-->
+
+
+        <!--Op B-->
+        
+  <!--         <div class="row">
+            <div class="col-md-5">
+              <p>Junto con mostrar la energía efectivamente inyectada al  Sistema Eléctrico Nacional (SEN) por cada planta solar, hemos desarrollado visualizaciones que permiten contextualizar de mejor forma el aporte de energía solar a la matriz eléctrica de Chile. </p>
+
+            </div>
+            <div class="col-md-6">
+              <p>El Coordinador Eléctrico Nacional (CEN) publica la generación eléctrica en 5 categorías:</p>
+              <ol class="row">
+                <div class="col-md-6">
+                  <li>Térmica</li>
+                  <li>Hidráulica</li>
+                  <li>Geotérmica</li>
+                </div>
+                <div class="col-md-6">
+                  <li>Eólica</li>
+                  <li>Solar</li>
+                </div>
+
+              </ol>
+            </div>
+          </div>
+          <div class="agrupar_visualizaciones">
+            <div class="row">
+              <div class="col-8 col-sm-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Contribución de energía solar</h5>
+                    <p class="card-text">A continuación se puede ver la contribución de la energía solar en Chile respecto a otras fuentes de energía.</p>
+                    <a href="#" class="btn btn-siVis">Ir al recurso</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-8 col-sm-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Generación eléctrica por categoría</h5>
+                    <p class="card-text">La generación solar en relación a las categorías anteriormente mencionadas puede verse a continuacion.</p>
+                    <a href="http://www.comitesolar.cl/gen_tec" class="btn btn-siVis">Ir al recurso</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-8 col-sm-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Plantas solares conectadas al SEN</h5>
+                    <p class="card-text">La siguiente visualización agrupa el funcionamiento de la totalidad de las plantas solares en Chile.</p>
+                    <a href="http://www.comitesolar.cl/solarChile_dev" class="btn btn-siVis">Ir al recurso</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>  -->
+         <!--Fin op B-->
+
+      </div>
+    </section>
+
+    <!-- SECCION QUE CONTIENE EL MAPA -->
+    <section id="mapavis" class="container">
+        <!-- Visualizaciones -->
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="titulo_seccion">
+              <svg class="linea_izq" height="10" width="300">
+                <line x1="0" y1="5" x2="300" y2="5" style="stroke:#f37235;stroke-width:3" />
+              </svg>Mapa</h3>
+          </div>
+
+            <div class="col-md-8">
+              {{ plot_div|indent(8) }}
+            </div>
+
+            <div class="col-md-1">
+              
+            </div>
+
+            <div class="col-md-3">
+              <h5>Simbología de la Herramienta</h5>
+              <ul class="vis-herramientas">
+                <li><img class="iconoHerramienta" src="mapa_dev/static/Pan.png" align="middle">
+                  <span>Arrastrar:</span> Permite desplazarse por el gráfico.
+                </li>
+                <li><img class="iconoHerramienta" src="mapa_dev/static/BoxSelect.png" align="middle">
+                  <span>Selección rectangular:</span> Permite seleccionar los puntos dentro del rectángulo.</li>
+                <li><img class="iconoHerramienta" src="mapa_dev/static/LassoSelect.png" align="middle">
+                  <span>Selección con lazo:</span> Seleccionar los puntos dentro del polígono trazado.</li>
+                <li><img class="iconoHerramienta" src="mapa_dev/static/BoxZoom.png" align="middle">
+                  <span>Zoom cuadrático:</span> Acerca el área dentro de la zona seleccionada.</li>
+                <li><img class="iconoHerramienta" src="mapa_dev/static/WheelZoom.png" align="middle">
+                  <span>Zoom con rueda del ratón:</span> Cuando está activo, permite acercar o alejar el gráfico al mover la rueda del ratón.</li>
+                 <li><img class="iconoHerramienta" src="mapa_dev/static/Reset.png" align="middle">
+                   <span>Resetear:</span> El gráfico vuelve a su estado inicial.</li>
+                 <li><img class="iconoHerramienta" src="mapa_dev/static/Crosshair.png" align="middle">
+                   <span>Líneas cruzadas:</span> Activar una cruz sobre el gráfico, de tal forma se visualiza mejor la proyección sobre los ejes.</li>
+                 <li><img class="iconoHerramienta" src="mapa_dev/static/Hover.png" align="middle">
+                   <span>Burbuja de información:</span> Visualizar información sobre puntos de interés.</li>
+                 <li><img class="iconoHerramienta" src="mapa_dev/static/Tap.png" align="middle">
+                   <span>Cliquear:</span> Accede a información complementaria al cliquear el punto de interés.</li>
+                 <li><img class="iconoHerramienta" src="mapa_dev/static/Save.png" align="middle">
+                   <span>Guardar:</span> Guarda la visualización correspondiente en un archivo <i>.png</i></li>
+              </ul>
+            </div>
+
+
+          </div>
+        <!--
+        <p>A continuación se describen brevemente las herramientas disponibles para interactuar con los gráficos. No todas las herramientas se encuentran disponibles en todos los gráficos, sino que en cada gráfico se han habilitado las herramientas que son más útiles para la respectiva visualización.</p> -->
+        </div>
+      </section>
+  </div>
+
+  <div class="footer_logos">
+      <div class="wrap">
+        <a href="http://wapp.corfo.cl/transparencia/home/" target="_blank"><img src="http://www.comitesolar.cl/wp-content/uploads/2017/07/gob_transparente-1.png" scale="0"></a>
+        <a href="http://www.corfo.cl/" target="_blank"><img src="http://www.comitesolar.cl/wp-content/uploads/2017/02/corfo.png" scale="0"></a>
+        <!-- <a href="http://www.energia.gob.cl/" target="_blank"><img src="http://www.comitesolar.cl/wp-content/uploads/2017/02/min_ener.png" scale="0"></a>
+        <a href="http://www.chiletransforma.cl/" target="_blank"><img src="http://www.comitesolar.cl/wp-content/uploads/2017/02/transforma.png" scale="0"></a> -->
+        <a href="http://www2.corfo.cl/transparencia/informaciontransparencia" target="_blank"><img src="http://www.comitesolar.cl/wp-content/uploads/2017/02/transparencia-1.png" scale="0"></a>
+      </div>
+  </div>
+  <!-- Footer -->
+  <footer>
+
+    <div class="wrap">
+
+      <div class="top">
+
+        <div class="listas">
+
+            <div class="lista widget_nav_menu">
+              <h5>ENLACES DE INTERÉS</h5>
+              <div class="menu-enlaces-de-interes-container">
+                <ul id="menu-enlaces-de-interes" class="menu">
+                  <li id="menu-item-556" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-556"><a href="http://www.enlacesolar.cl">Enlace Solar</a></li>
+                  <li id="menu-item-557" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-557"><a href="http://www.solarpaces.org">SolarPACES</a></li>
+                  <li id="menu-item-558" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-558"><a href="http://www.iea-pvps.org/">International Energy Agency- Photovoltaic Power Systems Programme (PVPS)</a></li>
+                  <li id="menu-item-559" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-559"><a href="http://energiaabierta.cl">Energía Abierta</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="lista w_siguenos">
+              <h5>SÍGUENOS</h5>
+              <div class="redes-lista">
+                <ul class="pes-redes-footer">
+
+                <li class="twitter">
+                  <a class="clearfix" href="https://twitter.com/comite_solar">
+                    <span class="icono"></span>
+                    <div class="texto">
+                      <span class="red">Twitter</span>
+                      <span class="usuario">comite_solar</span>
+                    </div>
+                  </a>
+                </li>
+
+
+                <li class="linkedin">
+                  <a class="clearfix" href="https://www.linkedin.com/company-beta/16163771/">
+                    <span class="icono"></span>
+                    <div class="texto">
+                      <span class="red">LinkedIn</span>
+                      <span class="usuario">Comité Solar</span>
+                    </div>
+                  </a>
+                </li>
+
+
+                <li class="youtube">
+                  <a class="clearfix" href="https://www.youtube.com/channel/UCwzsPTU8PGywOLbaeNJirbw">
+                    <span class="icono"></span>
+                    <div class="texto">
+                      <span class="red">YouTube</span>
+                      <span class="usuario">Comité Solar</span>
+                    </div>
+                  </a>
+                </li>
+
+                </ul>
+              </div>
+              </div>
+
+        </div>
+
+          <div class="clearfix"></div>
+          <div class="sep"></div>
+
+      </div>
+
+      <div class="bottom">
+
+          <div class="left">
+              <span>Comité Solar, Agustinas 640, Piso 16, Santiago, Chile. Teléfono: +56 2 24969600</span>
+          </div>
+
+          <nav>
+              <ul id="menu-main-menu" class="menu-main">
+                <li id="menu-item-42" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-42"><a href="#">Políticas de Privacidad</a></li>
+                <li id="menu-item-43" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-43"><a href="#">CC</a></li>
+              </ul>
+          </nav>
+
+          <div class="clearfix"></div>
+
+          <div class="bicolor">
+            <span class="azul"></span>
+            <span class="rojo"></span>
+          </div>
+
+        </div>
+
+      </div>
+
+  </footer>
+
+  <!-- Modal fotos --->
+
+
+
+
+
+
+    <!--  Ups! celular en vertical  -->
+    <div class="cel_vertical oculto">
+      <img src="mapa_dev/static/svg/celu.svg" alt="Tu smartphone está en posición vertical">
+      <h5>Para acceder a las visualizaciones pon en posición horizontal tu smartphone</h5>
+      <button id="vertical_ocultar" type="button" class="btn btn-outline-light">Volver</button>
+    </div>
+
+   <!-- Optional JavaScript -->
+   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  {{ plot_script|indent(8) }}
+
+
+  </body>
+</html>

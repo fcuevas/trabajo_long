@@ -1,0 +1,32 @@
+attrs:
+    Figure:
+        background_fill_alpha: 0.5        
+        background_fill_color: 'seashell'
+        border_fill_color: 'white'
+        outline_line_color: 'black'
+        h_symmetry: True
+        v_symmetry: True
+        min_border: 0
+        outline_line_width: 1.8
+        min_border_bottom: 0
+        min_border_top: 0
+    Axis:
+        axis_line_color: "black"
+        axis_label_text_color: "black"
+        major_label_text_color: "black"
+        major_tick_line_color: "black"
+        minor_tick_line_color: "black"
+        minor_tick_line_color: "black"
+        major_label_text_font_size: '11pt'
+        axis_label_text_font_size: '12pt'
+    Grid:
+        grid_line_dash: [6, 4]
+        grid_line_alpha: .3
+        grid_line_color: "black"
+    Title:
+        text_color: "black"
+        text_font_size: '13pt'
+       # text_font_style: "italic"
+    Legend:
+        background_fill_color: '#F5F5F5'
+        label_text_font_size: '11pt'
