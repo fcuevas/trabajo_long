@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Mar  6 12:10:09 2019
-
 @author: fcuevas
 """
 
@@ -37,8 +36,15 @@ reg_names = {'TARAPACÁ': 'Región de Tarapacá',
              'COQUIMBO': 'Región de Coquimbo',
              'VALPARAISO':'Región de Valparaíso' ,
              'VALPARAÍSO': 'Región de Valparaíso',
-             'METROPOLITANA DE SANTIAGO':'Región Metropolitana de Santiago' ,
-             'LIBERTADOR GENERAL BERNARDO OHIGGINS':"Región del Libertador Bernardo O'Higgins"} 
+             'METROPOLITANA DE SANTIAGO':'Región Metropolitana de Santiago',
+             'METROPOLITANA':'Región Metropolitana de Santiago',
+             'LIBERTADOR GENERAL BERNARDO OHIGGINS':"Región del Libertador Bernardo O'Higgins",
+             'MAULE':"Región del Maule",
+             'ÑUBLE':"Región de Ñuble",
+             'BÍO BÍO':"Región del Bío-Bío",
+             'ARAUCANÍA':"Región de La Araucanía",
+             'DE LOS RIOS':"Región de Los Ríos",
+             'DE LOS RÍOS':"Región de Los Ríos"}  
    
 #'pt_size', 'Cap_max','Nombre','Comuna','Estado','Punto_conex',
 #
@@ -87,6 +93,57 @@ solar2['UTM_oeste'] = solar2['UTM_oeste'].str.replace(',', '.').astype(float)
 solar2 = solar2[cols]
 solar2 = pl_sol.join(solar2, how='inner')
 ##########
+#en este lugar se modificó el csv, cambiando el huso, la utm y la potencia
+huso2 = pd.DataFrame({'Nombre':['LAGUNILLA','MARÍA ELENA FV', 'LA HUAYCA II', 'CORDILLERILLA SOLAR',
+            'ALTURAS DE OVALLE','MARCHIGUE II', 'CALAMA SOLAR I', 'PMG ANTAY', 'CERRO DOMINADOR',
+            'PANQUEHUE II', 'LA FRONTERA','AMPARO DEL SOL','LOS LIBERTADORES', 'VILLA PRAT', 'LAS PALOMAS', 'ENCON SOLAR', 
+            'PIQUERO','VALLE SOLAR ESTE 2','VALLE SOLAR OESTE 2', 'EL QUEMADO', 'PUNTA BAJA SOLAR', 'LA BLANQUINA', 'CALLE LARGA'],
+                     'huso':['19J','19K','19K',
+                     '19J','19J','19H','19K','19J','19k','19H','19H','19J','19H','19H',
+                     '19H','19H','19H','19J','19J','19H','19J','19H','19H']},
+                      index=[357,394, 403, 427, 428, 462, 480, 489,490, 501, 514, 534, 555, 559, 560,
+                    573, 577,578,579, 580, 589, 592, 593])
+
+
+utm=pd.DataFrame([['PAMPA SOLAR NORTE',379821, 7174646],
+                  ['CORDILLERILLA SOLAR',305770,6106832],
+                  ['ALTURAS DE OVALLE',285225,6617403],
+            ['EL SAUCE',367831,7221038],
+                  ['EL ROBLE',279532,6231325],
+                  ['URIBE SOLAR',375836,7393726],
+                  ['LA ESPERANZA II',266258,6197524],
+          ['CERRO DOMINADOR',450821,7481640],
+                  ['PANQUEHUE II',329892, 6371890],
+                  ['LA FRONTERA',246626.1,6142710],
+                  ['VALLE SOLAR ESTE 2',364187,6974786],
+                  ['VALLE SOLAR OESTE 2',362288,6976716],
+                 ['LA BLANQUINA',348247,6229034]],
+                  index=[332,427,428,439,442,455,457,490, 501, 514,578, 579, 592],columns=['Nombre','UTM_este','UTM_oeste'])
+
+
+potenc=pd.DataFrame([['CERRO DOMINADOR',99.05],
+                  ['EL PELICANO',100],
+                  ['EL SAUCE',2.98],
+                  ['ENCON SOLAR',9],
+                  ['FRANCISCO',3],
+                  ['LAUREL',9],
+                  ['MARCHIGUE II',9],
+                  ['PSF LOMAS COLORADAS',1.99],
+                  ['SOLAR ESPERANZA',2.87],
+                  ['SOLAR JAMA',31.5],
+                  ['SOLAR LOMA LOS COLORADOS',1.07]],
+                  index=[490,426,439,573,500,443,462,307,346,400,317],
+                  columns=['Nombre','Cap_max'])
+
+comunas=pd.DataFrame([['LAS PALOMAS','ÑUBLE'],
+                      ['VALLE SOLAR OESTE 2','ATACAMA']],
+                    index=[560,579],
+                    columns=['Nombre','region'])
+solar2.update(huso2)
+solar2.update(utm)
+solar2.update(potenc)
+solar2.update(comunas)
+############
 solar2.seguimiento = solar2.seguimiento.fillna('S/I')
 solar2.tecnologia = solar2.tecnologia.fillna('S/I')
 #solar2.area_pan = solar2.area_pan.fillna('S/I')
@@ -139,12 +196,13 @@ solar2['Longitud'] = lg
 solar2['Region'] = solar2.region.map(reg_names)
 pot_regiones = solar2.groupby('Region').sum()
 pot_regiones = pot_regiones[['Cap_max','num']]
+
+pot_regiones = pot_regiones.rename(columns={'Region': 'NOM_REG'})
 ########################################################################################
 regiones = pd.read_csv('../datos/shape_reg/regiones.csv')
-regiones.index = regiones.NOM_REG
-regiones = regiones.join(pot_regiones, how='inner')
+regiones= regiones.join(pot_regiones, on=["NOM_REG"])
+regiones=regiones.fillna('0')
 
-regiones = hv.Dataset(regiones)
 shape_reg = '../datos/shape_reg/reg.shp'
 shapesReg = cartopy.io.shapereader.Reader(shape_reg)
 hover6 = HoverTool(tooltips=[("Región: ", "@NOM_REG"),("Número de plantas: ", "@num"),("Potencia (MW): ", "@Cap_max{0.0}")])
